@@ -1,35 +1,72 @@
-(function mathCalculator() {
-  var displayNum = 0;
+var calculatorModule = (function() {
+  var _memory = 0;
+  var _total = 0.00;
+  var _registerBalance = 0;
 
-  var addKey = false;
-  var subtractKey = false;
-  var multiplyKey = false;
-  var divideKey = false;
 
-  function numKey(num) {
-    if (addKey) {
-      displayNum += num;
-    } else if (subtractKey) {
-      displayNum -= num;
-    } else if (multiplyKey) {
-      displayNum *= num;
-    } else if (divideKey) {
-      displayNum /= num;
-    } else {
-      displayNum = num;
+  function testError(testNum) {
+    if (typeof testNum !== "number") {
+      throw new Error("That ain't a number!!!");
     }
-    addKey = false;
-    subtractKey = false;
-    multiplyKey = false;
-    divideKey = false;
   }
 
-
-  function equalKey() {
-
+  function load(newTotal) {
+    testError(newTotal);
+    _total = newTotal;
+    return _total.toFixed(2);
+  }
+  function getTotal() {
+    return _total.toFixed(2);
+  }
+  function add(num) {
+    testError(num);
+    _total += num;
+    return _total.toFixed(2);
+  }
+  function subtract(num) {
+    testError(num);
+    _total -= num;
+    return _total.toFixed(2);
+  }
+  function multiply(num) {
+    testError(num);
+    _total *= num;
+    return _total.toFixed(2);
+  }
+  function divide(num) {
+    testError(num);
+    _total /= num;
+    return _total.toFixed(2);
   }
 
+  function getBalance() {
+    return _registerBalance.toFixed(2);
+  }
 
+  function depBalance(num) {
+    _registerBalance += num;
+  }
 
-})
+  function wdBalance(num) {
+    _registerBalance -= num;
+  }
 
+  function clear() {
+    _total = 0;
+    return _total.toFixed(0);
+  }
+
+  var calculator = {
+    load,
+    getTotal,
+    add,
+    subtract,
+    multiply,
+    divide,
+    getBalance,
+    depBalance,
+    clear
+  };
+
+  return calculator;
+})();
