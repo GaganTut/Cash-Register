@@ -40,15 +40,17 @@ var calculatorModule = (function() {
   }
 
   function getBalance() {
-    return _registerBalance.toFixed(2);
+    return _registerBalance;
   }
 
   function depBalance(num) {
-    _registerBalance += num;
+    var toNum = parseFloat(num);
+    _registerBalance += toNum;
   }
 
   function wdBalance(num) {
-    _registerBalance -= num;
+    var toNum = parseFloat(num);
+    _registerBalance -= toNum;
   }
 
   function clear() {
@@ -65,6 +67,7 @@ var calculatorModule = (function() {
     divide,
     getBalance,
     depBalance,
+    wdBalance,
     clear
   };
 

@@ -6,13 +6,24 @@
   var exprClicked = false;
   var secondNum = 0.00;
 
+  function clearDisplay() {
+    firstNum = 0;
+    secondNum = 0;
+    exprClicked = false;
+
+    for (var dis in opBtnClass) {
+      opBtnClass[dis].disabled = false;
+    }
+    screenDisplay.innerHTML = firstNum;
+    checkDecimal();
+  }
+
 
   var screenDisplay = document.getElementById("numDisplay");
   var opBtnClass = document.getElementsByClassName("operationBtn");
-  var deciBtn = document.getElementById("btnDot");
 
 
-  function newElement(elemType, parentID, className, htmlID, elemText, clickEvent) {
+  function newElement(elemType, parentID, className, htmlID, elemText) {
     var newElem = document.createElement(elemType);
     newElem.id = htmlID;
     newElem.className = className;
@@ -58,6 +69,7 @@
       screenDisplay.innerHTML = secondNum;
     }
     }
+    checkDecimal();
   }
 
   function equalSign() {
@@ -85,29 +97,50 @@
       for (var dis in opBtnClass) {
         opBtnClass[dis].disabled = false;
       }
+      checkDecimal();
     });
   }
 
   function useClearBtn() {
     var thisClearBtn = document.getElementById("clearBtn");
     thisClearBtn.addEventListener("click", function(){
-      firstNum = 0;
-      secondNum = 0;
-      exprClicked = false;
-      for (var dis in opBtnClass) {
-        opBtnClass[dis].disabled = false;
-      }
-      screenDisplay.innerHTML = firstNum;
+      clearDisplay();
     });
   }
 
-  function checkDecimal(num) {
-    if (num % 1 !== 0) {
+  function checkDecimal() {
+    var deciBtn = document.getElementById("btnDot");
+    var checkDec = parseFloat(screenDisplay.innerHTML);
+    if (checkDec % 1 !== 0 || screenDisplay.innerHTML.indexOf(".") !== -1) {
       deciBtn.disabled = true;
     } else {
       deciBtn.disabled = false;
     }
   }
+
+  function showBalance() {
+    var balBtn = document.getElementById("getBalBtn");
+    balBtn.addEventListener("click", function() {
+      clearDisplay();
+      firstNum = calc.getBalance();
+      screenDisplay.innerHTML = calc.getBalance();
+    });
+  }
+
+  function depCash() {
+    var depCashBtn = document.getElementById("depBtn");
+    depCashBtn.addEventListener("click", function() {
+      calc.depBalance(screenDisplay.innerHTML);
+    });
+  }
+
+  function withdrawCash() {
+    var withCashBtn = document.getElementById("wtdrBtn");
+    withCashBtn.addEventListener("click", function() {
+      calc.wdBalance(screenDisplay.innerHTML);
+    });
+  }
+
 
 
   newElement("button", "firstRow", "numberBtns", "btn7", "7");
@@ -119,6 +152,7 @@
   newElement("button", "firstRow", "operationBtn", "dvdBtn", "/");
   operationKey("dvdBtn");
   newElement("button", "firstRow", "topRowBtns spcBtn", "clearBtn", "Clear");
+  useClearBtn();
 
   newElement("button", "secondRow", "numberBtns", "btn4", "4");
   clickNumKey("btn4");
@@ -129,6 +163,7 @@
   newElement("button", "secondRow", "operationBtn", "mltyBtn", "*");
   operationKey("mltyBtn");
   newElement("button", "secondRow", "secondRowBtns spcBtn", "getBalBtn", "Get Balance");
+  showBalance();
 
   newElement("button", "thirdRow", "numberBtns", "btn3", "3");
   clickNumKey("btn3");
@@ -139,6 +174,7 @@
   newElement("button", "thirdRow", "operationBtn", "subBtn", "-");
   operationKey("subBtn");
   newElement("button", "thirdRow", "thirdRowBtns spcBtn", "depBtn", "Deposit Cash");
+  depCash();
 
   newElement("button", "fourthRow", "numberBtns", "btn0", "0");
   clickNumKey("btn0");
@@ -149,12 +185,10 @@
   newElement("button", "fourthRow", "operationBtn", "addBtn", "+");
   operationKey("addBtn");
   newElement("button", "fourthRow", "fourthRowBtns spcBtn", "wtdrBtn", "Withdraw Cash");
+  withdrawCash();
 
   newElement("button", "fifthRow", "fiftheRowBtns", "equalBtn", "=");
   equalSign();
-  useClearBtn();
-
-  console.log(document.getElementById("numDisplay").innerHTML);
 
 })();
 
