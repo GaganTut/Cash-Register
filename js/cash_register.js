@@ -1,17 +1,27 @@
 (function() {
 
+  var calcScreen = document.getElementById("numDisplay");
+  calcScreen.innerHTML = calculatorModule.getTotal();
+
   function newElement(elemType, parentID, className, htmlID, elemText, clickEvent) {
     var newElem = document.createElement(elemType);
     newElem.id = htmlID;
     newElem.className = className;
     newElem.innerHTML = elemText;
+    newElem.addEventListener("click", clickEvent);
 
     var parNode = document.getElementById(parentID);
     parNode.appendChild(newElem);
   }
 
+  function clickNumKey(elemID) {
+    var thisButton = document.getElementById(elemID);
+    calculatorModule.load(parseInt(elemID.innerHTML));
+    calcScreen.innerHTML = calculatorModule.getTotal();
+  }
 
-  newElement("button", "firstRow", "topRowBtns", "btn7", "7");
+
+  newElement("button", "firstRow", "topRowBtns", "btn7", "7", clickNumKey("btn7"));
   newElement("button", "firstRow", "topRowBtns", "btn8", "8");
   newElement("button", "firstRow", "topRowBtns", "btn9", "9");
   newElement("button", "firstRow", "topRowBtns", "dvdBtn", "/");
@@ -36,15 +46,6 @@
   newElement("button", "fourthRow", "fourthRowBtns spcBtn", "wtdrBtn", "Withdraw Cash");
 
   newElement("button", "fifthRow", "fiftheRowBtns", "equalBtn", "=");
-
-
-
-
-
-
-  var calcScreen = document.querySelector("#numDisplay");
-  calcScreen. innerHTML = calculatorModule.getTotal();
-
 
 })();
 
