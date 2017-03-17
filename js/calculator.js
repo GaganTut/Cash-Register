@@ -18,25 +18,25 @@ var calculatorModule = (function() {
   function getTotal() {
     return _total.toFixed(2);
   }
-  function add(num) {
-    testError(num);
-    _total += num;
-    return _total.toFixed(2);
+  function add(num1, num2) {
+    testError(num1);
+    newSum = num1 + num2;
+    return newSum.toFixed(2);
   }
-  function subtract(num) {
-    testError(num);
-    _total -= num;
-    return _total.toFixed(2);
+  function subtract(num1, num2) {
+    testError(num1);
+    newSub = num1 - num2;
+    return newSub.toFixed(2);
   }
-  function multiply(num) {
-    testError(num);
-    _total *= num;
-    return _total.toFixed(2);
+  function multiply(num1, num2) {
+    testError(num1);
+    newMlty = num1 * num2;
+    return newMlty.toFixed(2);
   }
-  function divide(num) {
-    testError(num);
-    _total /= num;
-    return _total.toFixed(2);
+  function divide(num1, num2) {
+    testError(num1);
+    newDvd = num1 / num2;
+    return newDvd.toFixed(2);
   }
 
   function getBalance() {
@@ -69,4 +69,4 @@ var calculatorModule = (function() {
   };
 
   return calculator;
-})();
+});
